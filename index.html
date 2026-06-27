@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuna Map Maker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="top-navbar">
+            <div class="app-title">TUNA MAP MAKER</div>
+            <button id="exportBtn">EXPORT LEVEL</button>
+        </div>
+        
+        <div class="workspace">
+            <div class="tool-sidebar">
+                <div class="sidebar-header">TOOLS</div>
+                <div class="tool-buttons">
+                    <button id="toolDraw" class="active">DRAW</button>
+                    <button id="toolErase">ERASE</button>
+                    <hr class="tool-divider">
+                    <button id="zoomIn">ZOOM +</button>
+                    <button id="zoomOut">ZOOM -</button>
+                    <button id="zoomReset">100%</button>
+                    <div class="control-help">R-CLICK + DRAG TO PAN</div>
+                </div>
+            </div>
+
+            <div class="center-area">
+                <div class="canvas-wrapper">
+                    <canvas id="mapCanvas" width="960" height="540"></canvas>
+                </div>
+                
+                <div class="bottom-asset-shelf">
+                    <div class="shelf-control-bar">
+                        <div class="shelf-title">OBJECT LIBRARY</div>
+                        <label for="fileUpload" class="upload-trigger">ADD PNG</label>
+                        <input type="file" id="fileUpload" accept="image/png" multiple style="display: none;">
+                    </div>
+                    <div id="toolbar-assets"></div>
+                </div>
+            </div>
+
+            <div class="properties-sidebar" id="propertiesPanel">
+                <div class="sidebar-header">PROPERTIES</div>
+                <div class="properties-content">
+                    <div class="asset-title-badge" id="selectedAssetName">NONE SELECTED</div>
+                    
+                    <div class="property-section">
+                        <div class="hitbox-title">DISPLAY SIZE (PX)</div>
+                        <div class="input-group">
+                            <label>WIDTH</label>
+                            <input type="number" id="assetW" value="32" min="1" max="1024">
+                        </div>
+                        <div class="input-group">
+                            <label>HEIGHT</label>
+                            <input type="number" id="assetH" value="32" min="1" max="1024">
+                        </div>
+                    </div>
+
+                    <div class="property-row">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="collisionToggle">
+                            <span class="custom-checkbox"></span>
+                            SOLID COLLISION
+                        </label>
+                    </div>
+                    
+                    <div id="customHitboxSettings" class="hitbox-nested-panel" style="display: none;">
+                        <div class="hitbox-title">HITBOX BOUNDS (PX)</div>
+                        <div class="input-group">
+                            <label>OFFSET X</label>
+                            <input type="number" id="hbX" value="0" min="0" max="1024">
+                        </div>
+                        <div class="input-group">
+                            <label>OFFSET Y</label>
+                            <input type="number" id="hbY" value="0" min="0" max="1024">
+                        </div>
+                        <div class="input-group">
+                            <label>WIDTH</label>
+                            <input type="number" id="hbW" value="32" min="1" max="1024">
+                        </div>
+                        <div class="input-group">
+                            <label>HEIGHT</label>
+                            <input type="number" id="hbH" value="32" min="1" max="1024">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
