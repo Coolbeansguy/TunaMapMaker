@@ -2,12 +2,15 @@ const canvas = document.getElementById('mapCanvas');
 const ctx = canvas.getContext('2d');
 const toolbarAssets = document.getElementById('toolbar-assets');
 const fileUpload = document.getElementById('fileUpload');
+const exportBtn = document.getElementById('exportBtn');
 
 const toolDraw = document.getElementById('toolDraw');
 const toolErase = document.getElementById('toolErase');
 const zoomIn = document.getElementById('zoomIn');
 const zoomOut = document.getElementById('zoomOut');
 const zoomReset = document.getElementById('zoomReset');
+const mousePosX = document.getElementById('mousePosX');
+const mousePosY = document.getElementById('mousePosY')
 
 const selectedAssetName = document.getElementById('selectedAssetName');
 const collisionToggle = document.getElementById('collisionToggle');
@@ -61,6 +64,8 @@ canvas.addEventListener('mousemove', (event) => {
     
     currentMouseGridX = Math.floor(mX / GRID_SIZE) * GRID_SIZE;
     currentMouseGridY = Math.floor(mY / GRID_SIZE) * GRID_SIZE;
+    mousePosX.innerText = "MOUSE X: " + String(currentMouseGridX / GRID_SIZE)
+    mousePosY.innerText = "MOUSE Y: " + String(currentMouseGridY / GRID_SIZE)
     isMouseOnCanvas = true;
 
     if (isPanning) {
@@ -200,6 +205,32 @@ fileUpload.addEventListener('change', (event) => {
         };
     }
     renderToolbar(); 
+});
+
+exportBtn.addEventListener('click', () => {
+    let everyPlacedObject = []
+    placedObjects.forEach(obj => {
+        everyPlacedObject.push({
+            "asset": obj.asset,
+            "grid_pos_x": obj.gridX,
+            "grid_pos_y": obj.gridY,
+            "size_w": obj.w,
+            "size_h": obj.h,
+        })
+    });
+    const levelData = {
+        "TileSize": GRID_SIZE,
+        "PlacedObject": everyPlacedObject,
+    }
+    const jsonLevelData = JSON.stringify(levelData);
+    const blob = new Blob([jsonLevelData], {type: "application/json"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob)
+    link.download = "test_map.json"
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
 });
 
 function renderToolbar() {
